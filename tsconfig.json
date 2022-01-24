@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "module": "UMD",
+        "target": "es2015",
+        "removeComments" : true,
+        "strictNullChecks": true,
+        "outDir": "./dist",                
+        "sourceMap": true,
+        "watch": true,        
+    }, 
+    "include": [
+        "src", "app.ts",
+    ],      
+}
+
+// "rootDir": "./src"
