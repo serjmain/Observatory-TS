@@ -1,5 +1,10 @@
 import IObservatory from "./IObservatory";
 
+interface IBoughtExcursionsCardBalance {
+    boughtExcursions: string[];
+    cardBalance: number;
+}
+
 export default class User {
     protected _name: string;
     protected _email: string;
@@ -85,8 +90,8 @@ export default class User {
         }
     }
 
-    public buyExcursionAsync(observatoryName: string, callback: (error: Error | null, data?: { boughtExcursions: string[], cardBalance: number }) => void) {
-        setTimeout((): void => {
+    public buyExcursionAsync(observatoryName: string, callback: (error: Error | null, data?: IBoughtExcursionsCardBalance) => void) {
+        setTimeout(() => {
             if (!this._observatoryList.length) {
                 return callback(new Error("some error"));
             }
@@ -101,7 +106,28 @@ export default class User {
         }, 2000);
     }
 
+    public buyExcursionAsyncPromise(observatoryName: string): Promise<IBoughtExcursionsCardBalance> {
+        return new Promise<IBoughtExcursionsCardBalance>((resolve, reject) => {
+            setTimeout(() => {
+                if (!this.observatoryList.length) {
+                    reject(new Error("no available excursion"));
+                }
+                const observatory: IObservatory | undefined = this.observatoryList.find(({ name, excursionPrice }) => name === observatoryName && this.cardBalance >= excursionPrice);
+
+                if (observatory) {
+                    this._cardBalance = this.cardBalance - observatory.excursionPrice;
+                    this._boughtExcursions.push(observatoryName);
+                    resolve({ boughtExcursions: this._boughtExcursions, cardBalance: this._cardBalance });
+                }
+                reject(new Error("not enough money or can't find observatory"));
+
+            }, 2000);
+        })
+    }
+
     public get boughtExcursions(): Array<string> | null {
         return this._boughtExcursions.length > 0 ? this._boughtExcursions : null;
     }
 };
+
+

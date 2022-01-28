@@ -41,3 +41,35 @@ jack.buyExcursionAsync("POJE", function (error, _a) {
     });
 });
 console.log("async in progress");
+//__________________________________2 0 1 5_________________________________________________________
+/* jack.buyExcursionAsyncPromise("NASA")
+    .then(() => {
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        return jack.buyExcursionAsyncPromise("FRIJE");
+    })
+    .then(() => {
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        return jack.buyExcursionAsyncPromise("GLUKE");
+    })
+    .then(() => {
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+    })
+    .catch (error => console.log(error));
+
+//___________________________________2 0 1 7________________________________________________________
+
+async function asyncBuyExcursion() {
+    try {
+        await jack.buyExcursionAsyncPromise("NASA");
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        await jack.buyExcursionAsyncPromise("FRIJE");
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        await jack.buyExcursionAsyncPromise("GLUKE");
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+asyncBuyExcursion(); */

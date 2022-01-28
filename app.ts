@@ -16,7 +16,7 @@ const frije = new Observatory("FRIJE", 10, 20, [nasa, mao, kamle]);
 const archi = new Observatory("ARCHI", 10, 20, [nasa, mao, kamle]);
 
 
-const jack = new User("Jack", "some email", "some password", 50);
+const jack = new User("Jack", "some email", "some password", 250);
 
 const genadiu = new PremiumUser("Genadiu", "some email", "some password", 50);
 
@@ -24,9 +24,7 @@ jack.addObservatory(poje);
 jack.addObservatory(frije);
 jack.addObservatory(archi);
 
-
-
-const processOfBuyingExcursionAsync = function (error, { boughtExcursions, cardBalance }) {
+/* const processOfBuyingExcursionAsync = (error: Error | null, { boughtExcursions, cardBalance }: { boughtExcursions: string[]; cardBalance: number; }) :void => {
     if (error) {
         throw error;
     } else {
@@ -35,15 +33,60 @@ const processOfBuyingExcursionAsync = function (error, { boughtExcursions, cardB
     }
 }
 
-jack.buyExcursionAsync("POJE", function (error, { boughtExcursions, cardBalance }) {
+jack.buyExcursionAsync("POJE", (error, { boughtExcursions, cardBalance }) => {
     processOfBuyingExcursionAsync(error, { boughtExcursions, cardBalance });
-    jack.buyExcursionAsync("FRIJE", function (error, { boughtExcursions, cardBalance }) {
+    jack.buyExcursionAsync("FRIJE", (error, { boughtExcursions, cardBalance }) => {
         processOfBuyingExcursionAsync(error, { boughtExcursions, cardBalance });
-        jack.buyExcursionAsync("ARCHI", function (error, { boughtExcursions, cardBalance }) {
+        jack.buyExcursionAsync("ARCHI", (error, { boughtExcursions, cardBalance }) => {
             processOfBuyingExcursionAsync(error, { boughtExcursions, cardBalance });
             console.log("finish async")
         });
     });
-});
+}); */
 
 console.log("async in progress");
+
+const asyncBuyExcursion: () => Promise<void> = async () => {
+    try {
+        await jack.buyExcursionAsyncPromise("POJE");
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        await jack.buyExcursionAsyncPromise("FRIJE");
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        await jack.buyExcursionAsyncPromise("ARCHI");
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+asyncBuyExcursion();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* jack.buyExcursionAsyncPromise("POJE")
+    .then(() => {
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        return jack.buyExcursionAsyncPromise("FRIJE");
+    })
+    .then(() => {
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+        return jack.buyExcursionAsyncPromise("ARCHI");
+    })
+    .then(() => {
+        console.log("boughtExcursions: ", jack.boughtExcursions, "cardBalance: ", jack.cardBalance);
+    })
+    .catch(error => console.log(error)); */
